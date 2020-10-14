@@ -10,10 +10,6 @@ import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 
 public class QiyuPackage implements ReactPackage {
-    @Override
-    public createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-        return Arrays.asList<NativeModule>(QiyuModule(reactContext))
-    }
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
