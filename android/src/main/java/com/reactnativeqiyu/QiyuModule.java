@@ -57,6 +57,11 @@ class QiyuModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaMo
     }
 
     @ReactMethod
+    public void multiply(int a, int b, Callback callback) {
+        callback.invoke(a+b);
+    }
+
+    @ReactMethod
     public void registerAppId(String appKey, String appName, Callback callback) {
         // 注册Package时已经初始化，这里什么也不做。为了和iOS接口保持统一
         init(appKey, appName);
