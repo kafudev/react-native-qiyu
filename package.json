@@ -24,8 +24,8 @@
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
-    "release": "dotenv release-it",
-    "release-ci": "dotenv -- release-it --ci",
+    "release": "npx nrm use npm && dotenv -- release-it",
+    "release-ci": "npx nrm use npm && dotenv -- release-it --ci",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
