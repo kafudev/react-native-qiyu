@@ -5,13 +5,13 @@ react-native netease qiyu sdk
 ## Installation
 
 ```sh
-npm install react-native-qiyu
+npm install @kafudev/react-native-qiyu
 ```
 
 ## Usage
 
 ```js
-import Qiyu from "react-native-qiyu";
+import Qiyu from "@kafudev/react-native-qiyu";
 
 // ...
 
