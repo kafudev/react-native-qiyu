@@ -25,7 +25,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
     "release": "dotenv release-it",
-    "push": "npm version patch && npm publish --access=public",
+    "release-ci": "dotenv release-it --ci",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
