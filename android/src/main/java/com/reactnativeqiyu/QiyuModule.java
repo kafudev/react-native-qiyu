@@ -14,11 +14,12 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.netease.nimlib.sdk.StatusBarNotificationConfig;
+import com.netease.nimlib.sdk.ServerAddresses;
 import com.qiyukf.unicorn.api.ConsultSource;
 import com.qiyukf.unicorn.api.OnMessageItemClickListener;
 import com.qiyukf.unicorn.api.ProductDetail;
 import com.qiyukf.unicorn.api.SavePowerConfig;
-import com.qiyukf.unicorn.api.StatusBarNotificationConfig;
 import com.qiyukf.unicorn.api.UICustomization;
 import com.qiyukf.unicorn.api.Unicorn;
 import com.qiyukf.unicorn.api.UnreadCountChangeListener;
@@ -26,9 +27,7 @@ import com.qiyukf.unicorn.api.YSFOptions;
 import com.qiyukf.unicorn.api.YSFUserInfo;
 import com.qiyukf.unicorn.api.lifecycle.SessionLifeCycleOptions;
 
-
-class QiyuModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
-
+public class QiyuModule extends ReactContextBaseJavaModule {
     private static ReactContext sContext;
     private static YSFOptions ysfOptions;
     private static UnreadChangeListener unreadChangeListener;
@@ -52,7 +51,6 @@ class QiyuModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaMo
             ysfOptions = new YSFOptions();
         }
         ysfOptions.statusBarNotificationConfig = new StatusBarNotificationConfig();
-        ysfOptions.savePowerConfig = new SavePowerConfig();
         Unicorn.init(sContext, appKey, ysfOptions, new FrescoImageLoader(sContext));
     }
 
