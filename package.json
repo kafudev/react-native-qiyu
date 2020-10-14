@@ -1,5 +1,5 @@
 {
-  "name": "react-native-qiyu",
+  "name": "@kafudev/react-native-qiyu",
   "version": "0.1.0",
   "description": "react-native netease qiyu sdk",
   "main": "lib/commonjs/index",
@@ -25,6 +25,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
     "release": "release-it",
+    "push": "npm version patch && npm publish --access=public",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
@@ -34,13 +35,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/zpd106/react-native-qiyu",
-  "author": "zpd106 <zpd106@sina.com> (https://github.com/zpd106)",
+  "repository": "https://github.com/kafudev/react-native-qiyu",
+  "author": "kafudev <kafudev@sina.com> (https://github.com/kafudev)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zpd106/react-native-qiyu/issues"
+    "url": "https://github.com/kafudev/react-native-qiyu/issues"
   },
-  "homepage": "https://github.com/zpd106/react-native-qiyu#readme",
+  "homepage": "https://github.com/kafudev/react-native-qiyu#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/bob": "^0.16.2",
@@ -90,7 +91,7 @@
       "tagName": "v${version}"
     },
     "npm": {
-      "publish": true
+      "publish  --access=public": true
     },
     "github": {
       "release": true
