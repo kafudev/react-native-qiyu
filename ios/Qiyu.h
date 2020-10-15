@@ -1,5 +1,7 @@
+#import <React/RCTUIManager.h>
 #import <React/RCTBridgeModule.h>
 
-@interface Qiyu : NSObject <RCTBridgeModule>
+
+@interface Qiyu : RCTViewManager
 
 @end

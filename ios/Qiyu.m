@@ -36,9 +36,12 @@ RCT_EXPORT_METHOD(toast:(NSString*)toast) {
     NSLog(@"%@", toast);
 }
 
-RCT_EXPORT_METHOD(registerAppId:(nonnull NSString *)appKey appName:(nonnull NSString *)appName) {
+RCT_EXPORT_METHOD(registerAppId:(nonnull NSString *)appKey appName:(nonnull NSString *)appName callback:(RCTResponseSenderBlock)callback) {
     if (appKey && appName) {
         [[QYSDK sharedSDK] registerAppId:appKey appName:appName];
+    }
+    if (callback) {
+        callback(1);
     }
 }
 
