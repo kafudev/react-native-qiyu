@@ -18,4 +18,5 @@ Pod::Spec.new do |s|
   
 
   s.dependency "React"
+  s.dependency "QY_iOS_SDK", "~> 5.14.0"
 end
