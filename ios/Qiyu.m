@@ -1,6 +1,8 @@
 #import "Qiyu.h"
+#import <NIMSDK/NIMSDK.h>
+#import <QYSDK/QYSDK.h>
 
-@interface RCTQiYu ()<QYConversationManagerDelegate>
+@interface Qiyu ()<QYConversationManagerDelegate>
 
 @property (nonatomic, strong) QYSessionViewController *sessionVC;   //七鱼联系界面
 
@@ -41,7 +43,7 @@ RCT_EXPORT_METHOD(registerAppId:(nonnull NSString *)appKey appName:(nonnull NSSt
         [[QYSDK sharedSDK] registerAppId:appKey appName:appName];
     }
     if (callback) {
-        callback(1);
+        callback(@"1");
     }
 }
 
@@ -120,7 +122,7 @@ RCT_EXPORT_METHOD(setCustomUIConfig:(nonnull NSDictionary*)paramDict) {
         self.naviBarColor = [self colorFromString:[paramDict objectForKey:@"naviBarColor"]];
     }
     if ([paramDict objectForKey:@"naviBarStyleDark"]) {
-        [[QYSDK sharedSDK] customUIConfig].rightBarButtonItemColorBlackOrWhite = [RCTConvert BOOL:[paramDict objectForKey:@"naviBarStyleDark"]];
+        [[QYSDK sharedSDK] customUIConfig].rightItemStyleGrayOrWhite = [RCTConvert BOOL:[paramDict objectForKey:@"naviBarStyleDark"]];
     }
     if ([paramDict objectForKey:@"showAudioEntry"]) {
         [[QYSDK sharedSDK] customUIConfig].showAudioEntry = [RCTConvert BOOL:[paramDict objectForKey:@"showAudioEntry"]];
@@ -189,9 +191,10 @@ RCT_EXPORT_METHOD(openServiceWindow:(nonnull NSDictionary*)paramDict){
     QYSessionViewController *sessionVC = [[QYSDK sharedSDK] sessionViewController];
     self.sessionVC = sessionVC;
     [self setSessionVC:sessionVC paramDict:paramDict];
-    sessionVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    sessionVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"return"] style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
     sessionVC.hidesBottomBarWhenPushed = YES;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sessionVC];
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
     if (self.naviBarColor) {
         nav.navigationBar.barTintColor = self.naviBarColor;
     }
@@ -315,14 +318,19 @@ RCT_EXPORT_METHOD(cleanCache) {
 
 - (void)back:(id)sender {
     if (self.showQuitQueue) {
-        [[[QYSDK sharedSDK] customActionConfig] showQuitWaiting:^(QuitWaitingType quitType) {
-            if (quitType != QuitWaitingTypeCancel) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
-                    self.sessionVC = nil;
-                });
-            }
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+            self.sessionVC = nil;
+        });
+//        [[[QYSDK sharedSDK] customActionConfig] showQuitWaiting:^(QuitWaitingType quitType) {
+//            if (quitType != QuitWaitingTypeCancel) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+//                    self.sessionVC = nil;
+//                });
+//            }
+//        }];
+        
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
