@@ -32,9 +32,9 @@ public class QiyuModule extends ReactContextBaseJavaModule {
     private static YSFOptions ysfOptions;
     private static UnreadChangeListener unreadChangeListener;
 
-    public QiyuModule(ReactApplicationContext reactContext) {
-        super(reactContext);
-        sContext = reactContext;
+    public QiyuModule(ReactApplicationContext reactApplicationContext) {
+        super(reactApplicationContext);
+        sContext = reactApplicationContext;
         // init(appKey, appName);
         //Diagnosis.setDevServer(1);
     }
@@ -51,7 +51,8 @@ public class QiyuModule extends ReactContextBaseJavaModule {
             ysfOptions = new YSFOptions();
         }
         ysfOptions.statusBarNotificationConfig = new StatusBarNotificationConfig();
-        Unicorn.init(sContext, appKey, ysfOptions, new FrescoImageLoader(sContext));
+        // you can also use "new FrescoImageLoader()" or "new PicassoImageLoader()"
+        Unicorn.init(sContext, appKey, ysfOptions, new GlideImageLoader(sContext));
     }
 
     @ReactMethod
@@ -61,7 +62,7 @@ public class QiyuModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void registerAppId(String appKey, String appName, Callback callback) {
-        // 注册Package时已经初始化，这里什么也不做。为了和iOS接口保持统一
+        // 注册初始化
         init(appKey, appName);
         callback.invoke(1);
     }
@@ -157,7 +158,13 @@ public class QiyuModule extends ReactContextBaseJavaModule {
         // 进入聊天界面，是文本输入模式的话，会弹出键盘，设置为false，可以修改为不弹出
         boolean autoShowKeyboard = RNUtils.optBoolean(params, "autoShowKeyboard", true);
 
-        UICustomization uiCustomization = ysfOptions.uiCustomization;
+        UICustomization uiCustomization = null;
+        if(ysfOptions == null){
+            if(ysfOptions.uiCustomization == null){
+                ysfOptions.uiCustomization = new UICustomization();
+            }
+            uiCustomization = ysfOptions.uiCustomization;
+        }
         if (uiCustomization == null) {
             uiCustomization = ysfOptions.uiCustomization = new UICustomization();
         }

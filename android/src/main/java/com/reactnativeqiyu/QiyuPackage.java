@@ -1,6 +1,7 @@
 package com.reactnativeqiyu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,9 +15,7 @@ public class QiyuPackage implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        List<NativeModule> modules = new ArrayList<>();
-        modules.add(new QiyuModule(reactContext));
-        return modules;
+        return Arrays.<NativeModule>asList(new QiyuModule(reactContext));
     }
 
     @Override
