@@ -210,13 +210,26 @@ public class QiyuModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setUserInfo(ReadableMap params) {
+    public void setUserInfo(ReadableMap params, Callback callback) {
         String userId = RNUtils.optString(params, "userId");
         String data = RNUtils.optString(params, "data");
         YSFUserInfo userInfo = new YSFUserInfo();
         userInfo.userId = userId;
         userInfo.data = data;
-        Unicorn.setUserInfo(userInfo);
+        Unicorn.setUserInfo(userInfo, new RequestCallback<Void>() {
+          @Override
+          public void onSuccess(Void aVoid) {
+            callback.invoke(1);
+          }
+          @Override
+          public void onFailed(int errorCode) {
+            callback.invoke(0);
+          }
+          @Override
+          public void onException(Throwable throwable) {
+
+          }
+      });
     }
 
     @ReactMethod
@@ -266,5 +279,5 @@ public class QiyuModule extends ReactContextBaseJavaModule {
     private static void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
     }
-    
+
 }
