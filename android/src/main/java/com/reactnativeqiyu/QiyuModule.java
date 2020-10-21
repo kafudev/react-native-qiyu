@@ -16,6 +16,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.ServerAddresses;
+import com.netease.nimlib.sdk.RequestCallback;
 import com.qiyukf.unicorn.api.ConsultSource;
 import com.qiyukf.unicorn.api.OnMessageItemClickListener;
 import com.qiyukf.unicorn.api.ProductDetail;
