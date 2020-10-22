@@ -67,6 +67,9 @@ public class RNUtils {
         if (TextUtils.isEmpty(resName)) {
             return null;
         }
+        if (resName.startsWith("http")) {
+          return resName;
+        }
         if (resName.startsWith("./")) {
             resName = resName.replace("./", "");
         }

@@ -9,7 +9,7 @@ type QiyuType = {
   ): Promise<number>;
   openServiceWindow(params: object): void;
   setCustomUIConfig(params: object): void;
-  setUserInfo(params: object, callback: void): void;
+  setUserInfo(params: object, callback: void): Promise<number>;
   logout(): void;
   cleanCache(): void;
   getUnreadCountCallback(): Promise<number>;

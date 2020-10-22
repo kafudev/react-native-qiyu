@@ -217,20 +217,22 @@ public class QiyuModule extends ReactContextBaseJavaModule {
         YSFUserInfo userInfo = new YSFUserInfo();
         userInfo.userId = userId;
         userInfo.data = data;
-        Unicorn.setUserInfo(userInfo, new RequestCallback<Void>() {
-          @Override
-          public void onSuccess(Void aVoid) {
-            callback.invoke(1);
-          }
-          @Override
-          public void onFailed(int errorCode) {
-            callback.invoke(0);
-          }
-          @Override
-          public void onException(Throwable throwable) {
+        Unicorn.setUserInfo(userInfo);
+        callback.invoke(1);
+        // Unicorn.setUserInfo(userInfo, new RequestCallback<Void>() {
+        //   @Override
+        //   public void onSuccess(Void aVoid) {
+        //     callback.invoke(1);
+        //   }
+        //   @Override
+        //   public void onFailed(int errorCode) {
+        //     callback.invoke(0);
+        //   }
+        //   @Override
+        //   public void onException(Throwable throwable) {
 
-          }
-      });
+        //   }
+        // });
     }
 
     @ReactMethod

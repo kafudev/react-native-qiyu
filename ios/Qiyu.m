@@ -330,7 +330,7 @@ RCT_EXPORT_METHOD(cleanCache) {
 //                });
 //            }
 //        }];
-        
+
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
@@ -370,32 +370,38 @@ RCT_EXPORT_METHOD(cleanCache) {
             color = @"0xFF";
             color = [color stringByAppendingString:[colorString substringFromIndex:1]];
             argb = [[NSNumber alloc] initWithUnsignedLong:strtol([color UTF8String], 0, 16)];
-            
+
             return [RCTConvert UIColor:argb];
         }else if (colorString.length == 9) {
             color = @"0x";
             color = [color stringByAppendingString:[colorString substringFromIndex:1]];
             argb = [[NSNumber alloc] initWithUnsignedLong:strtol([color UTF8String], 0, 16)];
-            
+
             return [RCTConvert UIColor:argb];
         }
     }
-    
+
     return nil;
 }
 
 - (UIImage*)getResourceImage:(NSString*)imageFilePath
 {
+    NSRange range = [imageFilePath rangeOfString:@"http"];
+    NSString *substring = [[imageFilePath substringFromIndex:NSMaxRange(range)];
+    if(substring.length >0){
+      return imageFilePath;
+    }
+
     NSString *localImagePath = [imageFilePath substringFromIndex:1];
     NSString *bundlePath = [NSBundle mainBundle].bundlePath;
     bundlePath = [[bundlePath stringByAppendingPathComponent:@"assets"] stringByAppendingPathComponent:localImagePath];
-    
+
     UIImage *image = [[UIImage imageWithContentsOfFile:bundlePath] resizableImageWithCapInsets:UIEdgeInsetsMake(15,15,30,30) resizingMode:UIImageResizingModeStretch];
     if (image) {
         return image;
     }
-    
-    return nil;
+
+    return null;
 }
 
 @end
