@@ -1,6 +1,6 @@
 {
   "name": "@kafudev/react-native-qiyu",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "description": "react-native netease qiyu sdk",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
