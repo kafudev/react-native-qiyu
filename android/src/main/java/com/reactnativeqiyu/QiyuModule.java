@@ -144,6 +144,16 @@ public class QiyuModule extends ReactContextBaseJavaModule {
         String sessionBackgroundImage = RNUtils.optString(params, "sessionBackgroundImage");
         // 会话窗口上方提示条中的背景颜色
         String sessionTipBackgroundColor = RNUtils.optString(params, "sessionTipBackgroundColor");
+
+        // 标题栏背景图
+        int titleBackgroundResId = RNUtils.optInt(params, "titleBackgroundResId");
+        // 标题栏背景颜色，如果同时设置 drawable 和颜色，优先使用 drawable
+        String titleBackgroundColor = RNUtils.optString(params, "titleBackgroundColor");
+        // 标题栏风格，影响标题和标题栏上按钮的颜色
+        int titleBarStyle = RNUtils.optInt(params, "titleBarStyle");
+        // 标题居中
+        boolean titleCenter = RNUtils.optBoolean(params, "titleCenter", false);
+
         // 访客头像
         String customerHeadImage = RNUtils.optString(params, "customerHeadImage");
         // 客服头像
@@ -180,6 +190,12 @@ public class QiyuModule extends ReactContextBaseJavaModule {
         uiCustomization.inputTextSize = inputTextFontSize;
         uiCustomization.msgBackgroundUri = RNUtils.getImageUri(sContext, sessionBackgroundImage);
         uiCustomization.topTipBarBackgroundColor = RNUtils.parseColor(sessionTipBackgroundColor);
+
+        uiCustomization.titleBackgroundResId = (int)titleBackgroundResId;
+        uiCustomization.titleBackgroundColor = RNUtils.parseColor(titleBackgroundColor);
+        uiCustomization.titleBarStyle = (int)titleBarStyle;
+        uiCustomization.titleCenter = titleCenter;
+
         uiCustomization.rightAvatar = RNUtils.getImageUri(sContext, customerHeadImage);
         uiCustomization.leftAvatar = RNUtils.getImageUri(sContext, serviceHeadImage);
         uiCustomization.msgListViewDividerHeight = (int) sessionMessageSpacing;
