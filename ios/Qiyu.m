@@ -10,6 +10,8 @@
 
 @property (nonatomic, strong) UIColor *naviBarColor;                //导航栏颜色
 
+@property (nonatomic, strong) UIColor *naviTitleColor;                //导航栏颜色
+
 @property (nonatomic, strong) NSNumber *viewReactTag;               //记录当前视图的reactTag
 
 @property (nonatomic, assign) BOOL showQuitQueue;                   //记录显示排队选择配置
@@ -90,11 +92,11 @@ RCT_EXPORT_METHOD(setCustomUIConfig:(nonnull NSDictionary*)paramDict) {
     }
     if ([paramDict objectForKey:@"customerHeadImage"]) {
         imageName = [RCTConvert NSString:[paramDict objectForKey:@"customerHeadImage"]];
-        [[QYSDK sharedSDK] customUIConfig].customerHeadImage = [self getResourceImage:imageName];
+        [[QYSDK sharedSDK] customUIConfig].customerHeadImageUrl = [self getResourceImage:imageName];
     }
     if ([paramDict objectForKey:@"serviceHeadImage"]) {
         imageName = [RCTConvert NSString:[paramDict objectForKey:@"serviceHeadImage"]];
-        [[QYSDK sharedSDK] customUIConfig].serviceHeadImage = [self getResourceImage:imageName];
+        [[QYSDK sharedSDK] customUIConfig].serviceHeadImageUrl = [self getResourceImage:imageName];
     }
     if ([paramDict objectForKey:@"customerMessageBubbleNormalImage"]) {
         imageName = [RCTConvert NSString:[paramDict objectForKey:@"customerMessageBubbleNormalImage"]];
@@ -120,6 +122,9 @@ RCT_EXPORT_METHOD(setCustomUIConfig:(nonnull NSDictionary*)paramDict) {
     }
     if ([paramDict objectForKey:@"naviBarColor"]) {
         self.naviBarColor = [self colorFromString:[paramDict objectForKey:@"naviBarColor"]];
+    }
+    if ([paramDict objectForKey:@"naviTitleColor"]) {
+        self.naviTitleColor = [self colorFromString:[paramDict objectForKey:@"naviTitleColor"]];
     }
     if ([paramDict objectForKey:@"naviBarStyleDark"]) {
         [[QYSDK sharedSDK] customUIConfig].rightItemStyleGrayOrWhite = [RCTConvert BOOL:[paramDict objectForKey:@"naviBarStyleDark"]];
@@ -171,7 +176,7 @@ RCT_EXPORT_METHOD(getUnreadCountCallback:(RCTResponseSenderBlock)callback) {
 //    [[[QYSDK sharedSDK] conversationManager] clearUnreadCount];
 //}
 
-RCT_EXPORT_METHOD(setUserInfo:(nonnull NSDictionary*)paramDict) {
+RCT_EXPORT_METHOD(setUserInfo:(nonnull NSDictionary*)paramDict callback:(RCTResponseSenderBlock)callback){
     QYUserInfo *userInfo = nil;
     if ([paramDict objectForKey:@"userId"] || [paramDict objectForKey:@"data"]) {
         userInfo = [[QYUserInfo alloc] init];
@@ -185,18 +190,26 @@ RCT_EXPORT_METHOD(setUserInfo:(nonnull NSDictionary*)paramDict) {
     if (userInfo) {
         [[QYSDK sharedSDK] setUserInfo:userInfo];
     }
-}
+    if (callback) {
+        callback(@[@"1"]);
+    }}
 
 RCT_EXPORT_METHOD(openServiceWindow:(nonnull NSDictionary*)paramDict){
     QYSessionViewController *sessionVC = [[QYSDK sharedSDK] sessionViewController];
     self.sessionVC = sessionVC;
     [self setSessionVC:sessionVC paramDict:paramDict];
     sessionVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"return"] style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    UIBarButtonItem * leftBarButtonItem  =  [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    [leftBarButtonItem setTintColor:[UIColor whiteColor]];
+    sessionVC.navigationItem.leftBarButtonItem =leftBarButtonItem;
     sessionVC.hidesBottomBarWhenPushed = YES;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sessionVC];
     nav.modalPresentationStyle = UIModalPresentationFullScreen;
     if (self.naviBarColor) {
         nav.navigationBar.barTintColor = self.naviBarColor;
+    }
+    if (self.naviTitleColor) {
+        nav.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor whiteColor] };
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
@@ -387,7 +400,7 @@ RCT_EXPORT_METHOD(cleanCache) {
 - (UIImage*)getResourceImage:(NSString*)imageFilePath
 {
     NSRange range = [imageFilePath rangeOfString:@"http"];
-    NSString *substring = [[imageFilePath substringFromIndex:NSMaxRange(range)];
+    NSString *substring = [imageFilePath substringFromIndex:NSMaxRange(range)];
     if(substring.length >0){
       return imageFilePath;
     }
@@ -401,7 +414,7 @@ RCT_EXPORT_METHOD(cleanCache) {
         return image;
     }
 
-    return null;
+    return nil;
 }
 
 @end
