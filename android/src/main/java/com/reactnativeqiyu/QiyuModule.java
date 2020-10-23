@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
@@ -57,8 +58,8 @@ public class QiyuModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void multiply(int a, int b, Callback callback) {
-        callback.invoke(a+b);
+    public void multiply(int a, int b, Promise promise) {
+      promise.resolve(a * b);
     }
 
     @ReactMethod
