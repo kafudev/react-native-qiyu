@@ -11,11 +11,11 @@ Pod::Spec.new do |s|
   s.authors      = package["author"]
 
   s.platforms    = { :ios => "9.0" }
-  s.source       = { :git => "https://github.com/zpd106/react-native-qiyu.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/kafudev/react-native-qiyu.git", :tag => "#{s.version}" }
 
-  
+
   s.source_files = "ios/**/*.{h,m,mm}"
-  
+
 
   s.dependency "React"
   s.dependency "QY_iOS_SDK", "~> 5.14.0"
