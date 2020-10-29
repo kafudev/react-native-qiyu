@@ -87,12 +87,6 @@
     ]
   },
   "release-it": {
-    "hooks": {
-      "before:init": [
-        "yarn lint",
-        "yarn test"
-      ]
-    },
     "git": {
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}"
