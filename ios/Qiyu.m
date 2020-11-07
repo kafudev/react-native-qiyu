@@ -195,23 +195,23 @@ RCT_EXPORT_METHOD(setUserInfo:(nonnull NSDictionary*)paramDict callback:(RCTResp
     }}
 
 RCT_EXPORT_METHOD(openServiceWindow:(nonnull NSDictionary*)paramDict){
-    QYSessionViewController *sessionVC = [[QYSDK sharedSDK] sessionViewController];
-    self.sessionVC = sessionVC;
-    [self setSessionVC:sessionVC paramDict:paramDict];
-    sessionVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"return"] style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-    UIBarButtonItem * leftBarButtonItem  =  [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-    [leftBarButtonItem setTintColor:[UIColor whiteColor]];
-    sessionVC.navigationItem.leftBarButtonItem =leftBarButtonItem;
-    sessionVC.hidesBottomBarWhenPushed = YES;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sessionVC];
-    nav.modalPresentationStyle = UIModalPresentationFullScreen;
-    if (self.naviBarColor) {
-        nav.navigationBar.barTintColor = self.naviBarColor;
-    }
-    if (self.naviTitleColor) {
-        nav.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor whiteColor] };
-    }
     dispatch_async(dispatch_get_main_queue(), ^{
+        QYSessionViewController *sessionVC = [[QYSDK sharedSDK] sessionViewController];
+        self.sessionVC = sessionVC;
+        [self setSessionVC:sessionVC paramDict:paramDict];
+        sessionVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"return"] style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+        UIBarButtonItem * leftBarButtonItem  =  [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+        [leftBarButtonItem setTintColor:[UIColor whiteColor]];
+        sessionVC.navigationItem.leftBarButtonItem =leftBarButtonItem;
+        sessionVC.hidesBottomBarWhenPushed = YES;
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sessionVC];
+        nav.modalPresentationStyle = UIModalPresentationFullScreen;
+        if (self.naviBarColor) {
+            nav.navigationBar.barTintColor = self.naviBarColor;
+        }
+        if (self.naviTitleColor) {
+            nav.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor whiteColor] };
+        }
         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
     });
 }
