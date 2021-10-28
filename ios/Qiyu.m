@@ -147,8 +147,9 @@ RCT_EXPORT_METHOD(setCustomUIConfig:(nonnull NSDictionary*)paramDict) {
 }
 
 RCT_EXPORT_METHOD(setUrlClickWithEventName:(NSString*)EventName) {
-    [[QYSDK sharedSDK] customActionConfig].linkClickBlock = ^(NSString *linkAddress){
+    [[QYSDK sharedSDK] customActionConfig].linkClickBlock = ^QYLinkClickActionPolicy(NSString *linkAddress){
         [self.bridge.eventDispatcher sendDeviceEventWithName:EventName body:@{@"url": linkAddress}];
+        return nil;
     };
 }
 
