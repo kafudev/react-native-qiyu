@@ -65,6 +65,7 @@ public class QiyuModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void registerAppId(String appKey, String appName, Callback callback) {
         // 注册初始化
+        Unicorn.initSdk();
         init(appKey, appName);
         callback.invoke(1);
     }
