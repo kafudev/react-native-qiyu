@@ -64,6 +64,11 @@ public class QiyuModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void registerAppId(String appKey, String appName, Callback callback) {
+        // 初始化方法不要限制进程，也就是说不要只在主进程中初始化
+        if (ysfOptions == null) {
+            ysfOptions = new YSFOptions();
+        }
+        Unicorn.config(sContext, appKey, ysfOptions, null);
         // 注册初始化
         Unicorn.initSdk();
         init(appKey, appName);

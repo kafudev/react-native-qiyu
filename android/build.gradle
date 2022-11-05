@@ -127,7 +127,7 @@ def kotlin_version = getExtOrDefault('kotlinVersion')
 dependencies {
   // noinspection GradleDynamicVersion
   api 'com.facebook.react:react-native:+'
-  implementation 'com.qiyukf.unicorn:unicorn:6.9.2'
+  implementation 'com.qiyukf.unicorn:unicorn:7.10.0'
   implementation "androidx.appcompat:appcompat:1.0.0"
   implementation "com.google.android.material:material:1.0.0"
   implementation "androidx.constraintlayout:constraintlayout:1.1.3"
